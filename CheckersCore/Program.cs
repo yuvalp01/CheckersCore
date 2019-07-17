@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 
@@ -30,6 +31,7 @@ namespace CheckersCore
                     Console.WriteLine("For WHITE winner simulation enter W");
                     Console.WriteLine("For Illegal simulation enter I");
                     Console.WriteLine("For Incomplete simulation enter C");
+                    Console.WriteLine("For your own simulation file enter P");
                     Console.WriteLine("*******");
                     string choice = Console.ReadLine();
                     switch (choice.ToUpper())
@@ -45,6 +47,23 @@ namespace CheckersCore
                             break;
                         case "C":
                             movements = simulation.LoadSimulation("..\\..\\Simulations\\incomplete.txt");
+                            break;
+                        case "P":
+                            Console.WriteLine("Please ented the simulation file path");
+                            string path = Console.ReadLine();
+                            try
+                            {
+                                movements = simulation.LoadSimulation(path);
+                            }
+                            catch (FileNotFoundException)
+                            {
+                                Console.WriteLine($"The file {path} does not exist");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Illegal file format, please use text file with 4 points in each line separated by comma. Exception: {ex.Message}");
+                            }
+
                             break;
                         case "T":
                             //For testing
